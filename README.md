@@ -68,23 +68,23 @@ cd legal_summarization
 
 ### Loading the Data
 
-Each JSON file is a dictionary keyed by a unique ID (`uid`). You can load and explore the data using Python's built-in `json` module:
+Each JSON file is a dictionary keyed by a unique ID (`uid`). You can load and explore the data using Node.js's built-in `fs` module:
 
-```python
-import json
+```js
+const fs = require("fs");
 
-# Load the full dataset (446 sets from both websites)
-with open("all_v1.json", "r") as f:
-    data = json.load(f)
+// Load the full dataset (446 sets from both websites)
+const raw = fs.readFileSync("all_v1.json", "utf-8");
+const data = JSON.parse(raw);
 
-print(f"Total sets: {len(data)}")
+console.log(`Total sets: ${Object.keys(data).length}`);
 
-# Inspect a single entry
-uid, entry = next(iter(data.items()))
-print(f"UID: {uid}")
-print(f"Document: {entry['doc']}")
-print(f"Original text: {entry['original_text'][:200]}...")
-print(f"Reference summary: {entry['reference_summary']}")
+// Inspect a single entry
+const [uid, entry] = Object.entries(data)[0];
+console.log(`UID: ${uid}`);
+console.log(`Document: ${entry["doc"]}`);
+console.log(`Original text: ${entry["original_text"].slice(0, 200)}...`);
+console.log(`Reference summary: ${entry["reference_summary"]}`);
 ```
 
 You can also load the source-specific files:
