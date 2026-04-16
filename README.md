@@ -101,23 +101,22 @@ with open("tosdr_annotated_v1.json", "r") as f:
 
 ### Example: Basic Dataset Exploration
 
-```python
-import json
+```javascript
+const fs = require("fs");
 
-with open("all_v1.json", "r") as f:
-    data = json.load(f)
+const data = JSON.parse(fs.readFileSync("all_v1.json", "utf-8"));
+const entries = Object.values(data);
 
-# List all unique documents in the dataset
-documents = set(entry["doc"] for entry in data.values())
-print(f"Unique documents: {len(documents)}")
-for doc in sorted(documents)[:10]:
-    print(f"  - {doc}")
+// List all unique documents in the dataset
+const documents = [...new Set(entries.map((e) => e.doc))].sort();
+console.log(`Unique documents: ${documents.length}`);
+documents.slice(0, 10).forEach((doc) => console.log(`  - ${doc}`));
 
-# Compute average lengths of original texts and summaries
-avg_orig = sum(len(e["original_text"].split()) for e in data.values()) / len(data)
-avg_summ = sum(len(e["reference_summary"].split()) for e in data.values()) / len(data)
-print(f"\nAvg original text length: {avg_orig:.1f} words")
-print(f"Avg summary length: {avg_summ:.1f} words")
+// Compute average lengths of original texts and summaries
+const avgOrig = entries.reduce((sum, e) => sum + e.original_text.split(/\s+/).length, 0) / entries.length;
+const avgSumm = entries.reduce((sum, e) => sum + e.reference_summary.split(/\s+/).length, 0) / entries.length;
+console.log(`\nAvg original text length: ${avgOrig.toFixed(1)} words`);
+console.log(`Avg summary length: ${avgSumm.toFixed(1)} words`);
 ```
 
 ## Rebuilding / Reproducing
