@@ -52,6 +52,94 @@ A note on annotation:
   * q-: quote(-) -- this text is excerpt of the original text
   * d: description -- this text is a description of what the original text talks about, but may not give details
 
+## Getting Started
 
+### Prerequisites
 
+- Python 3.6 or later (no external packages required for basic usage)
+- Git
 
+### Clone the Repository
+
+```bash
+git clone https://github.com/<your-username>/legal_summarization.git
+cd legal_summarization
+```
+
+### Loading the Data
+
+Each JSON file is a dictionary keyed by a unique ID (`uid`). You can load and explore the data using Python's built-in `json` module:
+
+```python
+import json
+
+# Load the full dataset (446 sets from both websites)
+with open("all_v1.json", "r") as f:
+    data = json.load(f)
+
+print(f"Total sets: {len(data)}")
+
+# Inspect a single entry
+uid, entry = next(iter(data.items()))
+print(f"UID: {uid}")
+print(f"Document: {entry['doc']}")
+print(f"Original text: {entry['original_text'][:200]}...")
+print(f"Reference summary: {entry['reference_summary']}")
+```
+
+You can also load the source-specific files:
+
+```python
+# TL;DRLegal subset (84 sets)
+with open("tldrlegal_v1.json", "r") as f:
+    tldrlegal = json.load(f)
+
+# TOS;DR annotated subset (84 sets)
+with open("tosdr_annotated_v1.json", "r") as f:
+    tosdr = json.load(f)
+```
+
+### Example: Basic Dataset Exploration
+
+```javascript
+const fs = require("fs");
+
+const data = JSON.parse(fs.readFileSync("all_v1.json", "utf-8"));
+const entries = Object.values(data);
+
+// List all unique documents in the dataset
+const documents = [...new Set(entries.map((e) => e.doc))].sort();
+console.log(`Unique documents: ${documents.length}`);
+documents.slice(0, 10).forEach((doc) => console.log(`  - ${doc}`));
+
+// Compute average lengths of original texts and summaries
+const avgOrig = entries.reduce((sum, e) => sum + e.original_text.split(/\s+/).length, 0) / entries.length;
+const avgSumm = entries.reduce((sum, e) => sum + e.reference_summary.split(/\s+/).length, 0) / entries.length;
+console.log(`\nAvg original text length: ${avgOrig.toFixed(1)} words`);
+console.log(`Avg summary length: ${avgSumm.toFixed(1)} words`);
+```
+
+## Rebuilding / Reproducing
+
+This repository is a dataset release for the paper *Plain English Summarization of Contracts* (NAACL NLLP Workshop 2019). There is no build system or trained model included. To reproduce the paper's results:
+
+1. Load the dataset using the Python snippets above.
+2. Preprocess the text as described in the paper (tokenization, lowercasing, etc.).
+3. Train or evaluate a summarization model of your choice on the data. The paper uses extractive and abstractive baselines; refer to Section 4 of the paper for details.
+4. Evaluate using ROUGE or other metrics as described in the paper.
+
+A minimal reproduction setup might look like:
+
+```bash
+# Create a virtual environment (optional but recommended)
+python3 -m venv venv
+source venv/bin/activate
+
+# Install common NLP/summarization dependencies
+pip install rouge-score nltk
+
+# Run your evaluation or training script
+python your_experiment.py
+```
+
+Since this repository contains only the dataset, any model code or evaluation scripts should be implemented separately following the methodology in the paper.
