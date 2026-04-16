@@ -22,6 +22,22 @@ for uid, entry in data.items():
     break
 ```
 
+**JavaScript (Node.js) example:**
+
+```javascript
+const fs = require("fs");
+
+const data = JSON.parse(fs.readFileSync("all_v1.json", "utf8"));
+
+// data is an object keyed by unique IDs (e.g. "legalsum01")
+for (const [uid, entry] of Object.entries(data)) {
+    console.log(uid, entry.doc);
+    console.log("Original:", entry.original_text.slice(0, 100), "...");
+    console.log("Summary:", entry.reference_summary.slice(0, 100), "...");
+    break;
+}
+```
+
 ## Files
 
 | File | Entries | Description |
