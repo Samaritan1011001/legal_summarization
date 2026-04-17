@@ -4,6 +4,7 @@ Thank you for your interest in contributing to this research dataset! This repos
 
 ## Table of Contents
 
+- [How to Use](#how-to-use)
 - [How to Report Issues](#how-to-report-issues)
 - [Suggesting Improvements](#suggesting-improvements)
 - [Contributing New Data](#contributing-new-data)
@@ -11,6 +12,81 @@ Thank you for your interest in contributing to this research dataset! This repos
 - [Citation Requirements](#citation-requirements)
 - [Code of Conduct](#code-of-conduct)
 - [Contact](#contact)
+
+## How to Use
+
+This section provides examples for loading and working with the dataset in Python.
+
+### Loading the Data
+
+Each JSON file is a dictionary keyed by unique IDs. To load a dataset:
+
+```python
+import json
+
+# Load the combined dataset (446 entries from both sources)
+with open("all_v1.json") as f:
+    all_data = json.load(f)
+
+# Load TL;DRLegal entries only (84 entries)
+with open("tldrlegal_v1.json") as f:
+    tldrlegal_data = json.load(f)
+
+# Load TOS;DR annotated entries (84 entries)
+with open("tosdr_annotated_v1.json") as f:
+    tosdr_data = json.load(f)
+```
+
+### Accessing Fields from an Entry
+
+```python
+# Get a single entry by its key
+entry = all_data["legalsum01"]
+
+print(entry["uid"])                # unique identifier
+print(entry["original_text"])      # cleaned original legal text
+print(entry["reference_summary"])  # plain English summary
+print(entry["doc"])                # source document name
+```
+
+TOS;DR entries include additional annotation fields:
+
+```python
+tosdr_entry = tosdr_data["tosdr001"]
+
+print(tosdr_entry["urls"])         # URL of the respective company
+print(tosdr_entry["case_text"])    # raw text from the case field
+print(tosdr_entry["case_code"])    # annotation code for case text
+print(tosdr_entry["title_text"])   # raw text from the title field
+print(tosdr_entry["title_code"])   # annotation code for title text
+```
+
+### Iterating Over Entries
+
+```python
+# Print all UIDs and the length of their original text
+for key, entry in all_data.items():
+    print(f"{entry['uid']}: {len(entry['original_text'])} chars")
+```
+
+### Filtering and Basic Analysis
+
+```python
+# Find entries where the summary is shorter than 200 characters
+short_summaries = {
+    uid: entry for uid, entry in all_data.items()
+    if len(entry["reference_summary"]) < 200
+}
+print(f"Entries with short summaries: {len(short_summaries)}")
+
+# Compute average compression ratio (original length / summary length)
+ratios = [
+    len(e["original_text"]) / len(e["reference_summary"])
+    for e in all_data.values()
+    if len(e["reference_summary"]) > 0
+]
+print(f"Average compression ratio: {sum(ratios) / len(ratios):.2f}")
+```
 
 ## How to Report Issues
 
