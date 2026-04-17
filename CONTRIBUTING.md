@@ -6,6 +6,69 @@ Thank you for your interest in contributing to this research dataset! This repos
 
 This is a research dataset consisting of 446 legal text and summary pairs from tldrlegal.com and tosdr.org. The dataset supports research in legal text summarization and natural language processing.
 
+## Using the Dataset
+
+### Dataset Files
+
+The repository includes three JSON files, each offering a different slice of the data:
+
+- **`all_v1.json`**: The complete dataset with 446 sets from both websites (tldrlegal.com and tosdr.org)
+- **`tldrlegal_v1.json`**: A subset of 84 sets sourced from TL;DRLegal
+- **`tosdr_annotated_v1.json`**: A subset of 84 sets sourced from TOS;DR, including additional annotation fields
+
+### Data Structure
+
+Each JSON file is a dictionary keyed by a unique identifier (UID), such as `legalsum01`. Every entry contains the following core fields:
+
+- `uid`: Unique identifier for the entry
+- `original_text`: The source legal text
+- `reference_summary`: The plain English summary
+- `doc`: Document name
+
+Depending on the source, entries may also include:
+
+**TL;DRLegal entries:**
+- `title`: Title of the entry
+
+**TOS;DR entries:**
+- `note`: Additional notes
+- `urls`: Company URL
+- `case_text`, `case_code`: Case information and annotation
+- `title_text`, `title_code`: Title information and annotation
+- `tldr_text`, `tldr_code`: TL;DR information and annotation
+
+### Loading the Data
+
+Here is a basic example of how to load and iterate over the dataset in Python:
+
+```python
+import json
+
+with open("all_v1.json") as f:
+    data = json.load(f)
+
+for uid, entry in data.items():
+    original = entry["original_text"]
+    summary = entry["reference_summary"]
+    doc_name = entry["doc"]
+```
+
+### Filtering by Source
+
+If you only need data from a specific source, load the corresponding file directly:
+
+```python
+import json
+
+# Load only TL;DRLegal entries
+with open("tldrlegal_v1.json") as f:
+    tldrlegal_data = json.load(f)
+
+# Load only TOS;DR entries
+with open("tosdr_annotated_v1.json") as f:
+    tosdr_data = json.load(f)
+```
+
 ## Ways to Contribute
 
 ### Reporting Issues
