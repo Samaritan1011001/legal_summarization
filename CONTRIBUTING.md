@@ -17,10 +17,30 @@ Thank you for your interest in contributing to this research dataset! This repos
 If you discover any issues with the dataset, please help us improve it by reporting:
 
 ### Data Quality Issues
-- Incorrect or corrupted text in original_text or reference_summary fields
-- Encoding problems or special character issues
-- Mismatched data between fields
-- Missing required fields
+
+When reviewing the dataset for quality problems, here are specific things to look for across the three JSON files (`all_v1.json`, `tldrlegal_v1.json`, `tosdr_annotated_v1.json`):
+
+**Text content problems**
+- Corrupted or garbled text in `original_text` or `reference_summary` fields (e.g., leftover HTML entities, broken Unicode characters like malformed accented letters)
+- Incomplete text cleaning: residual HTML tags, stray markup, or unnormalized whitespace (extra spaces, tabs, or newlines) in parsed legal text
+- Encoding issues with special characters, particularly in legal terms or company names (e.g., "Pok\u00e9mon" should render correctly, not appear as escaped sequences or replacement characters)
+
+**Field-level issues**
+- Missing or empty required fields: every entry must have `uid`, `original_text`, `reference_summary`, and `doc`
+- Entries where `reference_summary` has more tokens than `original_text` -- these should have been excluded during data preparation
+- Duplicate `uid` values within or across files
+- Empty `title` fields in `tldrlegal_v1.json` entries where a section title clearly exists in the source
+
+**TOS;DR-specific issues** (in `tosdr_annotated_v1.json`)
+- Invalid or malformed annotation codes in `case_code`, `title_code`, or `tldr_code` fields -- valid codes have a number prefix (1, 2, or 3) optionally followed by a comma and letter suffix (`s`, `j`, `q-`, or `d`), e.g., `"1,s"`, `"2,q-"`, `"3"`
+- Mismatches between annotation code quality rankings and the actual text quality (e.g., a `1`-ranked text that is clearly low quality)
+- Broken or outdated URLs in the `urls` field
+- Missing `tldr_text` or `tldr_code` fields in entries that should have TL;DR annotations
+
+**Cross-file consistency**
+- Entries present in `tldrlegal_v1.json` or `tosdr_annotated_v1.json` but missing from `all_v1.json`
+- Inconsistent `doc` names for entries that reference the same source document across files
+- Field mismatches where the same `uid` appears in multiple files with different `original_text` or `reference_summary` content
 
 ### Documentation Issues
 - Unclear or incorrect documentation
