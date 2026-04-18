@@ -24,6 +24,43 @@ Thank you for your interest in contributing to the Legal Summarization project! 
 pip install -r requirements.txt
 ```
 
+## Usage
+
+This project is a dataset for legal text summarization research. The data is stored as JSON files that can be loaded directly in Python.
+
+### Loading the Data
+
+```python
+import json
+
+# Load the combined dataset (446 sets from both sources)
+with open("all_v1.json", "r") as f:
+    data = json.load(f)
+
+# Or load a source-specific dataset
+with open("tldrlegal_v1.json", "r") as f:
+    tldrlegal_data = json.load(f)
+```
+
+### Accessing Fields
+
+Each entry in the dataset contains the following core fields:
+
+- `uid`: unique identification string
+- `original_text`: cleaned and parsed original text
+- `reference_summary`: cleaned and parsed reference summary
+- `doc`: name of the source document
+
+```python
+for entry in data:
+    print(entry["uid"])
+    print(entry["original_text"][:200])   # first 200 chars of the original
+    print(entry["reference_summary"])
+    print()
+```
+
+Entries from TL;DRLegal may also include a `title` field. Entries from TOS;DR may include additional fields such as `case_text`, `case_code`, `title_text`, `title_code`, `tldr_text`, `tldr_code`, `urls`, and `note`. See the README for full details on these fields and their annotation codes.
+
 ## Code Style
 
 - Follow PEP 8 guidelines for Python code
