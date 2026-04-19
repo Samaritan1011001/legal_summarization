@@ -4,6 +4,7 @@ Thank you for your interest in contributing to the Legal Summarization project! 
 
 ## Table of Contents
 
+- [How To](#how-to)
 - [Code of Conduct](#code-of-conduct)
 - [Getting Started](#getting-started)
 - [How to Contribute](#how-to-contribute)
@@ -11,6 +12,49 @@ Thank you for your interest in contributing to the Legal Summarization project! 
 - [Submitting Changes](#submitting-changes)
 - [Reporting Issues](#reporting-issues)
 - [Style Guidelines](#style-guidelines)
+
+## How To
+
+This section provides quick guides for common contribution tasks.
+
+### How to Report a Bug
+
+1. Check if the bug has already been reported in [Issues](https://github.com/Samaritan1011001/legal_summarization/issues)
+2. If not, create a new issue with the "bug" label
+3. Include a clear title and detailed description
+4. Add steps to reproduce, expected vs actual behavior
+5. Include your environment details (OS, Python version, etc.)
+
+### How to Suggest a Feature
+
+1. Check existing issues to see if it's already suggested
+2. Create a new issue with the "enhancement" label
+3. Describe the feature and its benefits
+4. Provide use cases and examples if possible
+
+### How to Submit a Pull Request
+
+1. Fork the repository and create a new branch
+2. Make your changes following the style guidelines
+3. Test your changes thoroughly
+4. Commit with clear, descriptive messages
+5. Push to your fork and submit a pull request
+6. Wait for review and address any feedback
+
+### How to Add a Dataset
+
+1. Ensure the data is legally shareable and properly anonymized
+2. Format the data according to the JSON structure (see Style Guidelines)
+3. Add documentation describing the dataset
+4. Include proper citations and sources
+5. Submit a pull request with your dataset
+
+### How to Improve Documentation
+
+1. Identify areas that need clarification or updates
+2. Make your changes in a new branch
+3. Ensure the documentation is clear and accurate
+4. Submit a pull request with your improvements
 
 ## Code of Conduct
 
