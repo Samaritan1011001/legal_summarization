@@ -24,6 +24,26 @@ Thank you for your interest in contributing to the Legal Summarization project! 
 pip install -r requirements.txt
 ```
 
+## How to Use
+
+This project provides tools for legal document summarization. Here's how to use it:
+
+### Basic Usage
+
+1. Prepare your legal documents in a supported format
+2. Run the summarization script with your input document
+3. Review the generated summary output
+
+### Running the Application
+
+```bash
+python main.py --input <path_to_legal_document>
+```
+
+### Configuration
+
+You can customize the summarization behavior by modifying configuration files or passing command-line arguments. Refer to the documentation for available options.
+
 ## Code Style
 
 - Follow PEP 8 guidelines for Python code
