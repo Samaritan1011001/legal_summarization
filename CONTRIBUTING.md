@@ -11,38 +11,43 @@ Thank you for your interest in contributing to the Legal Summarization project! 
 5. Test your changes thoroughly
 6. Submit a pull request
 
-## Development Setup
-
-### Prerequisites
-
-- Python 3.x
-- Required dependencies (see requirements.txt)
-
-### Installation
-
-```bash
-pip install -r requirements.txt
-```
-
 ## How to Use
 
-This project provides tools for legal document summarization. Here's how to use it:
+This repository is a dataset of legal contract texts paired with their plain English summaries. There are no Python scripts to run -- the data is provided as JSON files that you can load and use in your own projects.
 
-### Basic Usage
+### Available Data Files
 
-1. Prepare your legal documents in a supported format
-2. Run the summarization script with your input document
-3. Review the generated summary output
+- `all_v1.json` -- 446 document-summary sets (the full combined dataset)
+- `tldrlegal_v1.json` -- 84 document-summary sets sourced from TL;DRLegal
+- `tosdr_annotated_v1.json` -- 84 document-summary sets sourced from TOS;DR
 
-### Running the Application
+### Data Format
 
-```bash
-python main.py --input <path_to_legal_document>
+Each entry in the JSON files is keyed by a unique identifier and contains the following common fields:
+
+- `uid` -- unique identifier for the entry
+- `original_text` -- the full legal contract text
+- `reference_summary` -- the plain English summary
+- `doc` -- source document name
+
+Source-specific files may include additional fields:
+
+- TL;DRLegal (`tldrlegal_v1.json`): `title`, `id`
+- TOS;DR (`tosdr_annotated_v1.json`): `note`, `urls`, `case_text`, `case_code`, `title_text`, `title_code`
+
+### Example: Loading the Data
+
+```python
+import json
+
+with open("all_v1.json", "r") as f:
+    data = json.load(f)
+
+for key, entry in data.items():
+    print(f"UID: {entry['uid']}")
+    print(f"Summary: {entry['reference_summary'][:200]}...")
+    print()
 ```
-
-### Configuration
-
-You can customize the summarization behavior by modifying configuration files or passing command-line arguments. Refer to the documentation for available options.
 
 ## Code Style
 
