@@ -18,6 +18,39 @@ Please cite our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/eve
 }
 ```
 
+## Getting Started
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Samaritan1011001/legal_summarization.git
+cd legal_summarization
+```
+
+### Loading the Data
+
+The dataset is stored as JSON files and can be loaded directly with Python:
+
+```python
+import json
+
+# Load the full dataset (446 sets from both websites)
+with open("all_v1.json", "r") as f:
+    data = json.load(f)
+
+# Load only TL;DRLegal data (84 sets)
+with open("tldrlegal_v1.json", "r") as f:
+    tldrlegal_data = json.load(f)
+
+# Load only TOS;DR data (84 sets)
+with open("tosdr_annotated_v1.json", "r") as f:
+    tosdr_data = json.load(f)
+```
+
+No additional dependencies are required beyond Python's standard library.
+
 ## Files
 * all_v1.json: 446 sets from both websites
 * tldrlegal_v1.json: 84 sets from [https://tldrlegal.com](https://tldrlegal.com)
