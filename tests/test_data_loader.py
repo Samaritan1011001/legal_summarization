@@ -58,6 +58,18 @@ class TestGetSplits:
         splits2 = get_splits(sample_dataset, seed=42)
         assert [r["uid"] for r in splits1["train"]] == [r["uid"] for r in splits2["train"]]
 
+    def test_splits_invalid_ratios_sum_above_one(self, sample_dataset):
+        with pytest.raises(ValueError, match="must sum to 1.0"):
+            get_splits(sample_dataset, train_ratio=0.5, val_ratio=0.5, test_ratio=0.5)
+
+    def test_splits_invalid_ratios_sum_below_one(self, sample_dataset):
+        with pytest.raises(ValueError, match="must sum to 1.0"):
+            get_splits(sample_dataset, train_ratio=0.3, val_ratio=0.1, test_ratio=0.1)
+
+    def test_splits_negative_ratio(self, sample_dataset):
+        with pytest.raises(ValueError, match="must be non-negative"):
+            get_splits(sample_dataset, train_ratio=-0.1, val_ratio=0.6, test_ratio=0.5)
+
 
 class TestGetStatistics:
     def test_statistics_keys(self, sample_dataset):

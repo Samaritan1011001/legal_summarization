@@ -37,6 +37,10 @@ class TextPreprocessor:
     def prepare_for_model(self, texts, tokenizer, max_length=512):
         """Tokenize a batch of texts for model input.
 
+        Note: The LegalSummarizer handles its own tokenization internally,
+        so this method is not called by the default pipeline. It is provided
+        as a utility for custom workflows that need standalone tokenization.
+
         Args:
             texts: List of text strings.
             tokenizer: HuggingFace tokenizer instance.

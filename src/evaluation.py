@@ -22,6 +22,10 @@ class SummarizationEvaluator:
             Dict with rouge1, rouge2, rougeL keys, each containing
             precision, recall, fmeasure.
         """
+        if not predictions or not references:
+            empty = {"precision": 0.0, "recall": 0.0, "fmeasure": 0.0}
+            return {"rouge1": empty, "rouge2": empty, "rougeL": empty}
+
         rouge1_scores = []
         rouge2_scores = []
         rougeL_scores = []

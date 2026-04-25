@@ -41,6 +41,13 @@ class TestComputeRouge:
             for key in ["precision", "recall", "fmeasure"]:
                 assert 0.0 <= scores[metric][key] <= 1.0
 
+    def test_empty_inputs_returns_zeros(self, evaluator):
+        scores = evaluator.compute_rouge([], [])
+        for metric in ["rouge1", "rouge2", "rougeL"]:
+            assert scores[metric]["precision"] == 0.0
+            assert scores[metric]["recall"] == 0.0
+            assert scores[metric]["fmeasure"] == 0.0
+
 
 class TestComputeStatistics:
     def test_returns_expected_keys(self, evaluator, sample_predictions_and_references):
@@ -72,3 +79,9 @@ class TestEvaluate:
         assert "statistics" in results
         assert "rouge1" in results["rouge_scores"]
         assert "avg_prediction_length" in results["statistics"]
+
+    def test_evaluate_empty_inputs(self, evaluator):
+        results = evaluator.evaluate([], [])
+        assert results["rouge_scores"]["rouge1"]["fmeasure"] == 0.0
+        assert results["statistics"]["avg_prediction_length"] == 0
+        assert results["statistics"]["avg_reference_length"] == 0

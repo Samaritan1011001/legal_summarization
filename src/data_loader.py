@@ -47,7 +47,18 @@ def get_splits(data, train_ratio=0.8, val_ratio=0.1, test_ratio=0.1, seed=42):
 
     Returns:
         Dict with 'train', 'val', 'test' lists.
+
+    Raises:
+        ValueError: If ratios are negative or sum to more than 1.0.
     """
+    if train_ratio < 0 or val_ratio < 0 or test_ratio < 0:
+        raise ValueError("Split ratios must be non-negative.")
+    ratio_sum = train_ratio + val_ratio + test_ratio
+    if not (0.99 <= ratio_sum <= 1.01):
+        raise ValueError(
+            f"Split ratios must sum to 1.0, got {ratio_sum:.4f}."
+        )
+
     data = list(data)
     rng = random.Random(seed)
     rng.shuffle(data)

@@ -4,8 +4,6 @@ import argparse
 import json
 import os
 
-from tqdm import tqdm
-
 from src.data_loader import load_dataset, get_splits, get_statistics
 from src.preprocessing import TextPreprocessor
 from src.summarizer import LegalSummarizer
@@ -87,13 +85,10 @@ def run_pipeline(args):
     print(f"Loading model: {args.model}...")
     summarizer = LegalSummarizer(model_name=args.model)
 
-    predictions = []
-    for i in tqdm(range(0, len(texts), args.batch_size), desc="Summarizing"):
-        batch = texts[i : i + args.batch_size]
-        batch_summaries = summarizer.summarize_batch(
-            batch, batch_size=args.batch_size
-        )
-        predictions.extend(batch_summaries)
+    print(f"Summarizing {len(texts)} texts in batches of {args.batch_size}...")
+    predictions = summarizer.summarize_batch(
+        texts, batch_size=args.batch_size
+    )
 
     # Evaluate
     print("Evaluating...")
