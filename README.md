@@ -18,6 +18,36 @@ Please cite our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/eve
 }
 ```
 
+## Installation & Usage
+
+This repository contains JSON datasets for legal text summarization research. No package installation is required — simply clone the repository and load the data directly.
+
+### Prerequisites
+
+- Python 3.7 or higher
+
+### Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/lauramanor/legal_summarization.git
+cd legal_summarization
+```
+
+Load and explore the data in Python:
+
+```python
+import json
+
+with open("all_v1.json", "r") as f:
+    data = json.load(f)
+
+# Each entry contains original_text, reference_summary, and metadata
+for entry in data[:3]:
+    print(entry["uid"], "-", entry["doc"])
+```
+
 ## Files
 * all_v1.json: 446 sets from both websites
 * tldrlegal_v1.json: 84 sets from [https://tldrlegal.com](https://tldrlegal.com)
