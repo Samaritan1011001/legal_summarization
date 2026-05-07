@@ -1,57 +1,185 @@
 # Plain English Summarization of Contracts
 
+A dataset for automatic summarization of legal contracts into plain English, drawn from two crowd-sourced annotation websites. This resource supports research into abstractive summarization of legal text, with a focus on making contracts understandable to everyday readers.
 
-Please cite our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/events/ws-2019/#w19-22) as:
+This dataset is described in our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/W19-2201) (Manor & Li, 2019).
 
-```
-@inproceedings{manor-li-2019-plain,
-    title = "Plain {E}nglish Summarization of Contracts",
-    author = "Manor, Laura  and
-      Li, Junyi Jessy",
-    booktitle = "Proceedings of the Natural Legal Language Processing Workshop 2019",
-    month = jun,
-    year = "2019",
-    address = "Minneapolis, Minnesota",
-    publisher = "Association for Computational Linguistics",
-    url = "https://www.aclweb.org/anthology/W19-2201",
-    pages = "1--11",
-}
-```
+---
+
+## Abstract
+
+Legal contracts are notoriously difficult for non-experts to read. This dataset pairs original contract clauses with plain-English reference summaries, enabling the development and evaluation of automatic summarization systems for legal text. Data was collected from two community-driven annotation platforms -- [TL;DRLegal](https://tldrlegal.com) and [TOS;DR](https://tosdr.org/) -- and filtered so that every reference summary is shorter than its source text.
+
+---
+
+## Dataset Statistics
+
+| File | Source | Sets |
+|---|---|---|
+| `tldrlegal_v1.json` | [tldrlegal.com](https://tldrlegal.com) | 85 |
+| `tosdr_annotated_v1.json` | [tosdr.org](https://tosdr.org/) | 361 |
+| `all_v1.json` | Both sources combined | 446 |
+
+Sets with a reference summary longer than the original text are excluded from all files.
+
+---
 
 ## Files
-* all_v1.json: 446 sets from both websites
-* tldrlegal_v1.json: 84 sets from [https://tldrlegal.com](https://tldrlegal.com)
-* tosdr_annotated_v1.json: 84 sets from [https://tosdr.org/](https://tosdr.org/)
+
+- **`all_v1.json`** -- 446 sets from both websites
+- **`tldrlegal_v1.json`** -- 85 sets from [tldrlegal.com](https://tldrlegal.com)
+- **`tosdr_annotated_v1.json`** -- 361 sets from [tosdr.org](https://tosdr.org/)
+
+Each file is a JSON object whose keys are unique set identifiers (e.g. `"legalsum01"`, `"tosdr001"`) and whose values are the set dictionaries described below.
+
+---
+
+## Dataset Fields
+
+### Core Fields (all sets)
+
+| Field | Type | Description |
+|---|---|---|
+| `uid` | string | Unique identification string for the set |
+| `original_text` | string | Cleaned and parsed original contract text |
+| `reference_summary` | string | Cleaned and parsed plain-English reference summary |
+| `doc` | string | Name of the document the original text is from |
+
+### TL;DRLegal-only Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `title` | string | Display title of the set as shown on the website |
+
+### TOS;DR-only Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `note` | string | Optional additional notes from the annotator (mostly empty) |
+| `urls` | string | URL(s) of the company whose terms are annotated |
+| `case_text` | string | Raw text from the "case" field on the website |
+| `case_code` | string | Annotation code for the case text (see below) |
+| `title_text` | string | Raw text from the "title" field on the website |
+| `title_code` | string | Annotation code for the title text (see below) |
+| `tldr_text` | string | Raw text from the "tldr" field on the website |
+| `tldr_code` | string | Annotation code for the tldr text |
+
+#### Annotation Code Format (TOS;DR)
+
+Each `*_code` value begins with a numeric ranking of the text quality, optionally followed by a letter flag:
+
+| Flag | Meaning |
+|---|---|
+| `s` | **Standard** -- this exact text (without company names) appears in at least one other set |
+| `j` | **Jurisdiction** -- this text deals with a jurisdiction clause |
+| `q-` | **Quote(-)** -- this text is an excerpt of the original contract text |
+| `d` | **Description** -- this text describes what the original talks about but may omit specifics |
+
+---
+
+## Getting Started
+
+The files are standard JSON and can be loaded with Python's built-in `json` module.
+
+```python
+import json
+
+# Load all 446 sets
+with open("all_v1.json") as f:
+    dataset = json.load(f)
+
+# Iterate over sets
+for set_id, entry in dataset.items():
+    original = entry["original_text"]
+    summary  = entry["reference_summary"]
+    print(f"{set_id}: {summary[:80]}")
+
+# Load a single source file
+with open("tldrlegal_v1.json") as f:
+    tldrlegal_data = json.load(f)
+
+with open("tosdr_annotated_v1.json") as f:
+    tosdr_data = json.load(f)
+```
+
+Each entry is a dictionary; you can access any field directly:
+
+```python
+entry = dataset["legalsum01"]
+print(entry["doc"])               # "Pokemon GO Terms of Service"
+print(entry["original_text"])     # full clause text
+print(entry["reference_summary"]) # plain-English summary
+```
+
+---
 
 ## Data
-This dataset consists of the data included in the quantitative analysis as described in the paper. Sets which had a reference summary with more tokens than the original text are excluded.
-Each set consists of: 
-* uid: unique identification string
-* original_text: cleaned & parsed original text
-* reference_summary: cleaned & parsed reference summary
-* doc: name of the document which the original text is from
+
+This dataset consists of the data included in the quantitative analysis described in the paper. Sets where the reference summary contains more tokens than the original text are excluded.
+
+Each set consists of:
+
+- **`uid`** -- unique identification string
+- **`original_text`** -- cleaned & parsed original text
+- **`reference_summary`** -- cleaned & parsed reference summary
+- **`doc`** -- name of the document which the original text is from
+
 ### TL;DRLegal
-Each tldrlegal set may also have: 
-* title: "title" of the set (from website)
+
+Each TL;DRLegal set may also have:
+
+- **`title`** -- "title" of the set (from website)
+
 ### TOS;DR
-Each tos;dr set may also have:
-* note: Mostly empty, a space for additional notes from the annotator
-* urls: URL of the respective company
-* case_text: raw text from the "case" (from website)
-* case_code: annotation for "case" text 
-* title_text: raw text from the "title" (from website)
-* title_code: annotation for "title" text 
-* tldr_text: raw text from the "tldr" (from website)
-* tldr_code: annotation for "tldr" 
 
-A note on annotation: 
-* Each code begins with a number, which is the 'ranking' of the quality of the respective text as chosen by the annotator
-* A code may also have a letter, which stands for:
-  * s: standard -- this exact text (without company names) occurs at least one other time in a different set. 
-  * j: jurisdication -- this text deals with jurisdiction
-  * q-: quote(-) -- this text is excerpt of the original text
-  * d: description -- this text is a description of what the original text talks about, but may not give details
+Each TOS;DR set may also have:
 
+- **`note`** -- mostly empty; a space for additional notes from the annotator
+- **`urls`** -- URL of the respective company
+- **`case_text`** -- raw text from the "case" (from website)
+- **`case_code`** -- annotation for "case" text
+- **`title_text`** -- raw text from the "title" (from website)
+- **`title_code`** -- annotation for "title" text
+- **`tldr_text`** -- raw text from the "tldr" (from website)
+- **`tldr_code`** -- annotation for "tldr"
 
+A note on annotation:
 
+- Each code begins with a number, which is the ranking of the quality of the respective text as chosen by the annotator
+- A code may also have a letter, which stands for:
+  - `s`: standard -- this exact text (without company names) occurs at least one other time in a different set
+  - `j`: jurisdiction -- this text deals with jurisdiction
+  - `q-`: quote(-) -- this text is an excerpt of the original text
+  - `d`: description -- this text is a description of what the original text talks about, but may not give details
 
+---
+
+## License / Source
+
+The data was collected from two community annotation websites:
+
+- **[TL;DRLegal](https://tldrlegal.com)** -- crowd-sourced plain-English summaries of software licenses and terms
+- **[TOS;DR](https://tosdr.org/)** -- community-annotated Terms of Service summaries, rated for user-friendliness
+
+Please consult each source website for their respective terms of use regarding the underlying content.
+
+---
+
+## Citation
+
+If you use this dataset, please cite our paper:
+
+```bibtex
+@inproceedings{manor-li-2019-plain,
+    title     = "Plain {E}nglish Summarization of Contracts",
+    author    = "Manor, Laura  and
+                 Li, Junyi Jessy",
+    booktitle = "Proceedings of the Natural Legal Language Processing Workshop 2019",
+    month     = jun,
+    year      = "2019",
+    address   = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url       = "https://www.aclweb.org/anthology/W19-2201",
+    pages     = "1--11",
+}
+```
