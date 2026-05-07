@@ -10,6 +10,30 @@ This dataset is described in our [NAACL NLLP Workshop paper](https://www.aclweb.
 
 Legal contracts are notoriously difficult for non-experts to read. This dataset pairs original contract clauses with plain-English reference summaries, enabling the development and evaluation of automatic summarization systems for legal text. Data was collected from two community-driven annotation platforms -- [TL;DRLegal](https://tldrlegal.com) and [TOS;DR](https://tosdr.org/) -- and filtered so that every reference summary is shorter than its source text.
 
+To make the task concrete, here are three representative examples drawn from the dataset:
+
+**Example 1 -- Data Sharing Clause**
+
+> `original_text`: "We may share your personal information with third-party business partners for the purpose of providing the service to you. Those business partners will be given limited access to your personal information as is reasonably necessary to deliver the service, and we will require that they abide by our Privacy Policy."
+
+> `reference_summary`: "Your data may be shared with partners who help run the service, but they must follow the same privacy rules."
+
+---
+
+**Example 2 -- Limitation of Liability Clause**
+
+> `original_text`: "To the fullest extent permitted by applicable law, in no event shall the company, its affiliates, directors, employees, or licensors be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of (or inability to access or use) the service."
+
+> `reference_summary`: "The company is not responsible for indirect losses or damages -- such as lost profits or data -- that arise from your use of the service."
+
+---
+
+**Example 3 -- Arbitration Clause**
+
+> `original_text`: "Any dispute, claim, or controversy arising out of or relating to these Terms or the breach, termination, enforcement, interpretation, or validity thereof, including the determination of the scope or applicability of this agreement to arbitrate, shall be determined by binding arbitration before a single arbitrator. The arbitration shall be administered by JAMS pursuant to its Comprehensive Arbitration Rules and Procedures."
+
+> `reference_summary`: "Disputes must be resolved through binding arbitration rather than in court."
+
 ---
 
 ## Dataset Statistics
