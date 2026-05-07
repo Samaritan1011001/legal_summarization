@@ -46,6 +46,54 @@ To make the task concrete, here are three representative examples drawn from the
 
 Sets with a reference summary longer than the original text are excluded from all files.
 
+### Aggregate Statistics
+
+| Metric | Value |
+|---|---|
+| Total sets | 446 |
+| Unique documents covered | 59 |
+| Average original text length | 101.9 words |
+| Average summary length | 16.0 words |
+| Original text range | 7 -- 1,077 words |
+| Summary range | 1 -- 80 words |
+| Average compression ratio | 0.30 |
+
+### Examples from TL;DRLegal (`tldrlegal_v1.json`)
+
+**Example 1** -- `legalsum02` (Document: "Pokemon GO Terms of Service")
+
+> **Original (81 words):**
+> "by using our services you are agreeing to these terms our trainer guidelines and our privacy policy. if you are the parent or legal guardian of a child under the age of 13 the parent you are agreeing..."
+
+> **Summary (23 words):**
+> "by playing this game you agree to these terms. if you re under 13 and playing your parent guardian agrees on your behalf."
+
+**Example 2** -- `legalsum03` (Document: "Pokemon GO Terms of Service")
+
+> **Original (561 words):**
+> "if you want to use certain features of the services you will have to create an account with us..."
+
+> **Summary (39 words):**
+> "you have to use google pokemon trainer club or facebook to sign up and play. if you re under 13 your parent guardian has to do this for you. we might ban your account if your information is inaccurate."
+
+### Examples from TOS;DR (`tosdr_annotated_v1.json`)
+
+**Example 1** -- `tosdr001` (Document: "Privacy Policy")
+
+> **Original:**
+> "search encrypt does not track search history in any user identifiable way..."
+
+> **Summary:**
+> "this service does not track you."
+
+**Example 2** -- `tosdr002` (Document: "Privacy Policy")
+
+> **Original:**
+> "we also provide you additional data control options created by the gdpr..."
+
+> **Summary:**
+> "you can request access and deletion of personal data."
+
 ---
 
 ## Files
