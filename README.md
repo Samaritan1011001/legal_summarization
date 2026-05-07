@@ -135,6 +135,86 @@ print(entry["original_text"])     # full clause text
 print(entry["reference_summary"]) # plain-English summary
 ```
 
+### Filtering Sets by Source
+
+UIDs are prefixed by source, so you can split the combined file without loading the individual files:
+
+```python
+tldrlegal_sets = {k: v for k, v in dataset.items() if k.startswith("legalsum")}
+tosdr_sets     = {k: v for k, v in dataset.items() if k.startswith("tosdr")}
+
+print(f"TL;DRLegal sets: {len(tldrlegal_sets)}")
+print(f"TOS;DR sets:     {len(tosdr_sets)}")
+```
+
+### Computing Basic Statistics
+
+Calculate average token lengths and compression ratios across the dataset:
+
+```python
+import statistics
+
+original_lengths = []
+summary_lengths  = []
+compression_ratios = []
+
+for entry in dataset.values():
+    orig_tokens = len(entry["original_text"].split())
+    summ_tokens = len(entry["reference_summary"].split())
+    original_lengths.append(orig_tokens)
+    summary_lengths.append(summ_tokens)
+    compression_ratios.append(summ_tokens / orig_tokens)
+
+print(f"Avg original length (tokens): {statistics.mean(original_lengths):.1f}")
+print(f"Avg summary length (tokens):  {statistics.mean(summary_lengths):.1f}")
+print(f"Avg compression ratio:        {statistics.mean(compression_ratios):.3f}")
+```
+
+### Accessing TOS;DR-specific Fields
+
+TOS;DR entries include extra annotation fields:
+
+```python
+tosdr_entry = dataset["tosdr001"]
+
+print(tosdr_entry["case_code"])   # annotation code for the case text
+print(tosdr_entry["urls"])        # URL of the company whose terms are annotated
+print(tosdr_entry["title_text"])  # raw title text from the website
+```
+
+### Accessing TL;DRLegal-specific Fields
+
+TL;DRLegal entries include a display title:
+
+```python
+tldrlegal_entry = dataset["legalsum01"]
+
+print(tldrlegal_entry["title"])   # display title shown on tldrlegal.com
+```
+
+### Preparing Data for NLP / Summarization Tasks
+
+Create source-target pairs and a simple train/test split:
+
+```python
+import random
+
+pairs = [
+    {"source": entry["original_text"], "target": entry["reference_summary"]}
+    for entry in dataset.values()
+]
+
+random.seed(42)
+random.shuffle(pairs)
+
+split_idx = int(0.8 * len(pairs))
+train_set = pairs[:split_idx]
+test_set  = pairs[split_idx:]
+
+print(f"Train: {len(train_set)} examples")
+print(f"Test:  {len(test_set)} examples")
+```
+
 ---
 
 ## Data
