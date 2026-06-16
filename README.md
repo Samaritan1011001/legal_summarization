@@ -1,5 +1,10 @@
 # Plain English Summarization of Contracts
 
+## Overview
+
+This repository contains the dataset for **Plain English Summarization of Contracts**, a research project focused on automatically generating plain-language summaries of legal documents. The dataset pairs original legal text with human-written reference summaries sourced from [TLDRLegal](https://tldrlegal.com) and [TOS;DR](https://tosdr.org/).
+
+## Citation
 
 Please cite our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/events/ws-2019/#w19-22) as:
 
