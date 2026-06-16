@@ -18,6 +18,28 @@ Please cite our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/eve
 }
 ```
 
+## Getting Started
+
+To use this dataset, clone the repository and load any of the JSON files with your preferred programming language or tool:
+
+```python
+import json
+
+# Load the full dataset
+with open("all_v1.json", "r") as f:
+    data = json.load(f)
+
+# Inspect a single entry
+print(data[0].keys())
+print(data[0]["original_text"][:200])
+```
+
+Each entry contains an original legal text paired with a plain English reference summary, making this dataset suitable for:
+
+- Training and evaluating text summarization models
+- Studying readability of legal language
+- Benchmarking NLP models on domain-specific summarization tasks
+
 ## Files
 * all_v1.json: 446 sets from both websites
 * tldrlegal_v1.json: 84 sets from [https://tldrlegal.com](https://tldrlegal.com)
@@ -51,6 +73,10 @@ A note on annotation:
   * j: jurisdication -- this text deals with jurisdiction
   * q-: quote(-) -- this text is excerpt of the original text
   * d: description -- this text is a description of what the original text talks about, but may not give details
+
+## License
+
+Please refer to the original data sources ([TL;DRLegal](https://tldrlegal.com) and [ToS;DR](https://tosdr.org/)) for licensing information regarding the underlying legal texts and summaries. If you use this dataset in your research, please cite the paper above.
 
 
 
