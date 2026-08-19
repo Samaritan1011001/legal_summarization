@@ -80,6 +80,16 @@ A note on annotation:
   * q-: quote(-) -- this text is excerpt of the original text
   * d: description -- this text is a description of what the original text talks about, but may not give details
 
+## How Not to Use the Data
+
+This dataset is intended solely for NLP research and experimentation. The following uses are inappropriate and strongly discouraged:
+
+* **Do not treat this dataset as legal advice.** The original texts and reference summaries are scraped from crowd-sourced or community-annotated websites (tldrlegal.com and tosdr.org) and do not constitute professional legal counsel. Nothing in this dataset should be interpreted as guidance on any specific legal situation.
+* **Do not treat reference summaries as authoritative legal interpretations.** The summaries were written or annotated by non-lawyers and may be incomplete, imprecise, or out of date. They reflect lay interpretations of legal language, not binding legal analysis.
+* **Do not use this dataset to build production legal decision-making systems without expert review.** Any application that affects real legal rights or obligations must be reviewed and validated by qualified legal professionals before deployment. Models trained on this data alone are not suitable for production legal use.
+* **Do not assume the dataset is comprehensive or representative of all legal document types.** The corpus covers only 446 sets drawn from two websites focusing on software terms of service and similar agreements. It does not represent the full breadth of legal document categories (e.g., contracts, legislation, court opinions, real estate agreements).
+* **Do not use the data outside its intended NLP/research purpose.** This dataset was released to support academic research in legal language processing. Redistribution, commercial exploitation, or use in contexts unrelated to NLP research may conflict with the terms of the original sources and the intent of the dataset authors.
+
 
 
 
