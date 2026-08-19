@@ -19,20 +19,48 @@ Please cite our [NAACL NLLP Workshop paper](https://www.aclweb.org/anthology/eve
 ```
 
 ## Files
-* all_v1.json: 446 sets from both websites
-* tldrlegal_v1.json: 84 sets from [https://tldrlegal.com](https://tldrlegal.com)
-* tosdr_annotated_v1.json: 84 sets from [https://tosdr.org/](https://tosdr.org/)
+* all_v1.json: 446 sets from both websites (the combination of the two files below)
+* tldrlegal_v1.json: 85 sets from [https://tldrlegal.com](https://tldrlegal.com)
+* tosdr_annotated_v1.json: 361 sets from [https://tosdr.org/](https://tosdr.org/)
+
+`all_v1.json` is exactly the union of `tldrlegal_v1.json` and `tosdr_annotated_v1.json` (85 + 361 = 446 sets), so it can be used on its own when the full corpus is needed.
 
 ## Data
 This dataset consists of the data included in the quantitative analysis as described in the paper. Sets which had a reference summary with more tokens than the original text are excluded.
+
+### Format
+Each file is a single JSON object keyed by the set's `uid` (unique identification string); each value is an object holding the fields for that set. To load a file and iterate over the sets in Python:
+
+```python
+import json
+
+with open("all_v1.json") as f:
+    data = json.load(f)
+
+for uid, entry in data.items():
+    original = entry["original_text"]
+    summary = entry["reference_summary"]
+```
+
+### Summary statistics
+| File | Sets | Unique source documents (`doc`) | Empty reference summaries |
+| --- | --- | --- | --- |
+| all_v1.json | 446 | 59 | 0 |
+| tldrlegal_v1.json | 85 | 9 | 0 |
+| tosdr_annotated_v1.json | 361 | 50 | 0 |
+
+Every set has a non-empty `original_text` and `reference_summary`. Multiple sets can share the same source document (`doc`), so the number of sets is larger than the number of unique documents.
+
+### Fields
 Each set consists of: 
-* uid: unique identification string
+* uid: unique identification string (also the key used for the set in the JSON object)
 * original_text: cleaned & parsed original text
 * reference_summary: cleaned & parsed reference summary
 * doc: name of the document which the original text is from
 ### TL;DRLegal
 Each tldrlegal set may also have: 
 * title: "title" of the set (from website)
+* id: source identifier for the set on tldrlegal.com
 ### TOS;DR
 Each tos;dr set may also have:
 * note: Mostly empty, a space for additional notes from the annotator
@@ -51,6 +79,16 @@ A note on annotation:
   * j: jurisdication -- this text deals with jurisdiction
   * q-: quote(-) -- this text is excerpt of the original text
   * d: description -- this text is a description of what the original text talks about, but may not give details
+
+## How Not to Use the Data
+
+This dataset is intended solely for NLP research and experimentation. The following uses are inappropriate and strongly discouraged:
+
+* **Do not treat this dataset as legal advice.** The original texts and reference summaries are scraped from crowd-sourced or community-annotated websites (tldrlegal.com and tosdr.org) and do not constitute professional legal counsel. Nothing in this dataset should be interpreted as guidance on any specific legal situation.
+* **Do not treat reference summaries as authoritative legal interpretations.** The summaries were written or annotated by non-lawyers and may be incomplete, imprecise, or out of date. They reflect lay interpretations of legal language, not binding legal analysis.
+* **Do not use this dataset to build production legal decision-making systems without expert review.** Any application that affects real legal rights or obligations must be reviewed and validated by qualified legal professionals before deployment. Models trained on this data alone are not suitable for production legal use.
+* **Do not assume the dataset is comprehensive or representative of all legal document types.** The corpus covers only 446 sets drawn from two websites focusing on software terms of service and similar agreements. It does not represent the full breadth of legal document categories (e.g., contracts, legislation, court opinions, real estate agreements).
+* **Do not use the data outside its intended NLP/research purpose.** This dataset was released to support academic research in legal language processing. Redistribution, commercial exploitation, or use in contexts unrelated to NLP research may conflict with the terms of the original sources and the intent of the dataset authors.
 
 
 
