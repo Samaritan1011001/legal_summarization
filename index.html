@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Summarization - Plain English Summarization of Contracts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            background-color: #1a365d;
+            color: #fff;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        section h2 {
+            font-size: 1.4rem;
+            color: #1a365d;
+            margin-bottom: 1rem;
+        }
+
+        section p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        ul li strong {
+            color: #1a365d;
+        }
+
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Legal Summarization</h1>
+        <p>Plain English Summarization of Contracts - A dataset for automatic summarization of legal text</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>About the Project</h2>
+            <p>
+                This project provides a dataset for research in plain English summarization of legal contracts.
+                It contains paired sets of original legal text and their corresponding human-written reference
+                summaries, drawn from two community-driven legal simplification websites.
+            </p>
+            <p>
+                The dataset supports quantitative analysis of contract summarization as described in the
+                associated paper presented at the NAACL Natural Legal Language Processing Workshop 2019.
+            </p>
+        </section>
+
+        <section>
+            <h2>Dataset Files</h2>
+            <ul>
+                <li><strong>all_v1.json</strong> - 446 sets from both source websites</li>
+                <li><strong>tldrlegal_v1.json</strong> - 84 sets from <a href="https://tldrlegal.com">TL;DRLegal</a></li>
+                <li><strong>tosdr_annotated_v1.json</strong> - 84 annotated sets from <a href="https://tosdr.org/">ToS;DR</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Citation</h2>
+            <p>If you use this dataset, please cite:</p>
+            <p>
+                Manor, Laura and Li, Junyi Jessy. "Plain English Summarization of Contracts."
+                <em>Proceedings of the Natural Legal Language Processing Workshop 2019</em>,
+                Association for Computational Linguistics, 2019.
+            </p>
+            <p>
+                <a href="https://www.aclweb.org/anthology/W19-2201">View Paper</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Legal Summarization Dataset &copy; 2019</p>
+    </footer>
+</body>
+</html>
